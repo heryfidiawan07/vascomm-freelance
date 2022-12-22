@@ -5,17 +5,23 @@
     @include('partials.breadcrumb')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Sample Card</h5>
-                        <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                    </div>
-                    <div class="card-body">
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+            @for($i=0; $i<8; $i++)
+                <div class="col-md-3 px-1">
+                    <div class="card pb-3">
+                        <div class="img-frame mb-2 text-center" style="height: 150px; overflow: hidden; display: flex; justify-content: center;">
+                            <img src="{{ asset('assets/images/ecommerce/card.png') }}" alt="majoo" class="product-img" style="max-width: 100%;">
+                        </div>
+                        <h5 class="text-center">Title Product</h5>
+                        <p class="text-center mt-2 mb-0">Rp<b class="ml-2">1.500.000</b></p>
+                        <div class="p-3 mb-4" style="height: 4em; overflow-y: hidden;">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success btn-sm px-3">Beli</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endfor
         </div>
     </div>
 </div>
