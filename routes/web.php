@@ -13,7 +13,8 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// User & Permissions
+// User, Role & Permissions
+Route::put('user/approve/{id}', [UserController::class, 'approve'])->name('user.approve');
 Route::resource('role', RoleController::class, ['except' => ['create','edit']]);
 Route::resource('user', UserController::class, ['except' => ['create','edit']]);
 

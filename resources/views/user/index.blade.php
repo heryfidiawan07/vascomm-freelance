@@ -17,7 +17,9 @@
                 </button>
             </div>
             <div class="card-body">
-                {!! $dataTable->table() !!}
+                <div class="table-responsive fs-8">
+                    {!! $dataTable->table() !!}
+                </div>
             </div>
         </div>
     </div>
@@ -49,6 +51,12 @@ $(document).on('click', '.btn-edit', function() {
 $(document).on('click', '.btn-delete', function() {
     let data = new FormData()
     data.append('_method','DELETE')
+    swallRequest($(this).attr('data-url'), data, false, 'user-table')
+})
+
+$(document).on('click', '.btn-approve', function() {
+    let data = new FormData()
+    data.append('_method','PUT')
     swallRequest($(this).attr('data-url'), data, false, 'user-table')
 })
 

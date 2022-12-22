@@ -81,6 +81,28 @@ class UserController extends Controller
         }
     }
 
+    public function approve($id)
+    {
+        if(! auth()->user()->can('approve-user')) {
+            return ['status' => false, 'message' => "Permission denied !"];
+        }
+
+        DB::beginTransaction();
+        try {
+            $user = User::find($id);
+            if(! $user){
+                return ['status' => false, 'message' => "User not found !"];
+            }
+            $user->update(['status'=>1]);
+
+            DB::commit();
+            return ['status' => true, 'message' => "User approved"];
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return ['status' => false, 'message' => $th->getMessage()];
+        }
+    }
+
     public function show(User $user)
     {
         if(! auth()->user()->can('edit-user')) {
@@ -96,7 +118,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if(! auth()->user()->can('delete-user')) {
-            abort(403);
+            return ['status' => false, 'message' => "Permission denied !"];
         }
 
         DB::beginTransaction();
