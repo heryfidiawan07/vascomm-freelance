@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,12 +22,24 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         // dd(auth()->user()->hasRole('Customer'));
-        if(auth()->user()->can('customer-home')) {
+        if(! auth()->user()->status) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            $request->session()->flash('status', 'Akun menunggu approve dari admin !');
+            return redirect('login');
+        }
+        if(auth()->user()->hasRole('Customer')) {
             return view('customer.profile');
         }
         return view('home');
+    }
+
+    public function profile()
+    {
+        return view('customer.profile');
     }
 }

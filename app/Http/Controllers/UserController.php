@@ -115,6 +115,16 @@ class UserController extends Controller
         ];
     }
 
+    public function detail($id)
+    {
+        if(! auth()->user()->hasRole('Super Admin')) {
+            abort(403);
+        }
+        
+        $user = User::findOrFail($id);
+        return view('user.profile', ['user'=>$user]);
+    }
+
     public function destroy(User $user)
     {
         if(! auth()->user()->can('delete-user')) {
@@ -161,17 +171,25 @@ class UserController extends Controller
                     \App\Models\Permission::create($row);
                 }
                 $permissions = \App\Models\Permission::get();
+                $customerPermissions = \App\Models\Permission::whereName('customer-home')->get();
             }
 
             $role = Role::whereName('Super Admin')->first();
             if(!$role) {
                 $role = Role::create(['name'=>'Super Admin','guard_name'=>'web']);
+                $customer = Role::create(['name'=>'Customer','guard_name'=>'web']); 
             }
             $role->givePermissionTo($permissions);
+            $customer->givePermissionTo($customerPermissions);
 
             $user = User::first();
             if(!$user) {
-                $user = User::create(['name'=>'first','email'=>'first@mail.com','password'=>Hash::make('12345678')]);
+                $user = User::create([
+                    'name'=>'Heri Fidiawan',
+                    'email'=>'heryfidiawan07@gmail.com',
+                    'password'=>Hash::make('12345678'),
+                    'status'=>1
+                ]);
             }
             if($user->roles->count() > 0) {
                 $user->syncRoles($role);

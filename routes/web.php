@@ -12,6 +12,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+Route::get('/user/detail/{id}', [UserController::class, 'detail'])->name('user.detail');
 
 // User, Role & Permissions
 Route::put('user/approve/{id}', [UserController::class, 'approve'])->name('user.approve');

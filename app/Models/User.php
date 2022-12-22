@@ -49,4 +49,12 @@ class User extends Authenticatable
         }
         return 'Inactive';
     }
+
+    public function getPhoto()
+    {
+        if($this->photo){
+            return asset('storage/'.$this->photo);
+        }
+        return asset('img/noimage.png');
+    }
 }

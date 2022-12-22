@@ -109,7 +109,11 @@
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
+                        <li>
+                            <a href="{{ route('profile') }}">
+                                <i data-feather="user"></i><span>Account </span>
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

@@ -7,6 +7,12 @@
             <div class="login-card">
                 <div>
                     <div class="login-main">
+                        @if ($message = Session::get('status'))
+                            <div class="alert alert-info alert-block">
+                                <button type="button" class="close" data-bs-dismiss="alert">×</button>	
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @endif
                         <form method="POST" action="{{ route('login') }}" class="theme-form">
                             @csrf
 

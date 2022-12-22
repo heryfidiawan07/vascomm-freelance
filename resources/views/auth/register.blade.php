@@ -11,14 +11,14 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="name" class="col-form-label text-md-right">{{ __('Name') }}</label>
-                                <div>
+                                <div id="frame-photo">
                                     <video autoplay="true" id="video-webcam" width="100%">
                                         Browser not supported!
                                     </video>
                                 </div>
-                                <input id="photo" type="text" class="form-control" name="photo" value="" required>
-                                <button type="button" class="btn btn-primary" onclick="takeSnapshot()">Ambil Gambar</button>
+                                <img src="" alt="" id="preview-photo" class="w-100">
+                                <input id="photo" type="hidden" class="form-control" name="photo" value="">
+                                <button type="button" id="take-photo" class="btn btn-primary w-100">Ambil Gambar</button>
                             </div>
 
                             <div class="mb-3">
@@ -57,7 +57,7 @@
                             </div>
 
                             <div class="mb-0">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="btn-register">
                                     {{ __('Register') }}
                                 </button>
                                 <div class="text-center mt-4">
@@ -78,6 +78,24 @@
 
 @push('scripts')
 <script type="text/javascript">
+$('#preview-photo').hide();
+$('#btn-register').prop('disabled',true)
+$(document).on('click', '#take-photo', async function() {
+    if($(this).text() === 'Ambil Gambar') {
+        await takeSnapshot()
+        $(this).text('Ulangi')
+        $('#frame-photo').hide();
+        $('#preview-photo').show();
+        $('#btn-register').prop('disabled',false);
+    }else {
+        $(this).text('Ambil Gambar')
+        $('#frame-photo').show();
+        $('#preview-photo').hide();
+        $('#photo').val('')
+        $('#btn-register').prop('disabled',true)
+    }
+})
+
 // seleksi elemen video
 var video = document.querySelector("#video-webcam");
 
@@ -103,7 +121,7 @@ function videoError(e) {
 
 function takeSnapshot() {
     // buat elemen img
-    var img = document.createElement('img');
+    // var img = document.createElement('img');
     var context;
 
     // ambil ukuran video
@@ -121,9 +139,10 @@ function takeSnapshot() {
     context.drawImage(video, 0, 0, width, height);
 
     // render hasil dari canvas ke elemen img
-    img.src = canvas.toDataURL('image/png');
+    // img.src = canvas.toDataURL('image/png');
     // document.body.appendChild(img);
-    $('#photo').val(img.src)
+    $('#photo').val(canvas.toDataURL('image/png'))
+    $('#preview-photo').attr('src', canvas.toDataURL('image/png'))
 }
 </script>
 @endpush

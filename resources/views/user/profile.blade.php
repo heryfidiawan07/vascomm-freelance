@@ -14,22 +14,22 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="{{ auth()->user()->getPhoto() }}" alt="" width="200">
+                                <img src="{{ $user->getPhoto() }}" alt="" width="200">
                             </div>
                             <div class="col-md-8">
                                 <table class="table table-hover">
                                     <tbody>
                                         <tr>
                                             <td>Name</td>
-                                            <td>{{ auth()->user()->name }}</td>
+                                            <td>{{ $user->name }}</td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
-                                            <td>{{ auth()->user()->email }}</td>
+                                            <td>{{ $user->email }}</td>
                                         </tr>
                                         <tr>
                                             <td>Status</td>
-                                            <td>{{ auth()->user()->getStatus() }}</td>
+                                            <td>{{ $user->getStatus() }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
