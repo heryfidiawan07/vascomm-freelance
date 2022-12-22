@@ -29,7 +29,7 @@
                                         </tr>
                                         <tr>
                                             <td>Status</td>
-                                            <td>{{ auth()->user()->status() }}</td>
+                                            <td>{{ auth()->user()->getStatus() }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
